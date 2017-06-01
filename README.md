@@ -8,8 +8,10 @@ Basic starter files for a project using Grunt.js.
 This project includes the following Grunt plugins that I find most useful for a front end development workflow:
 
 * [grunt-contrib-watch](https://www.npmjs.org/package/grunt-contrib-watch) to watch for file changes and automatically refresh pages with changes
+* [grunt-import-js](https://www.npmjs.org/package/grunt-import-js) to add the ability to import js files into other js files
 * [grunt-contrib-uglify](https://www.npmjs.org/package/grunt-contrib-uglify) to concatenate and minify JavaScript files
 * [grunt-contrib-sass](https://www.npmjs.org/package/grunt-contrib-sass) to compile Sass files
+* [grunt-concat-css](https://www.npmjs.org/package/grunt-concat-css) to concatenate css files
 * [matchdep](https://www.npmjs.org/package/matchdep) to more easily install new Grunt plugins without having to manually load the task in your Gruntfile (see [Automatically Loading Tasks with matchdep](http://bdadam.com/blog/automatically-loading-grunt-tasks-with-matchdep.html))
 
 ## How do I use this?
