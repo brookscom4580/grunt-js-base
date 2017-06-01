@@ -1,5 +1,5 @@
 .DS_Store
 *.sass-cache
-*.css
-*.css.map
-*.min.js
+**/node_modules
+**/dist
+**/build

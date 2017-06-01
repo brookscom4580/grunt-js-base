@@ -1,7 +1,7 @@
 grunt-js-base
 =============
 
-Basic starter files for a project using Grunt.js. This repo was created as sample code for my article [Automate Recurring Tasks with Grunt.js on Sitepoint.com](www.sitepoint.com/automate-recurring-tasks-grunt/).
+Basic starter files for a project using Grunt.js.
 
 ## What's in it?
 

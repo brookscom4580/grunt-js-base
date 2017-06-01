@@ -6,25 +6,81 @@ module.exports = function(grunt){
 
     sass: {
       options: {
-        precision: 5
+        precision: 5,
+        sourcemap: 'none'
       },
       dev: {
         options: {
           style: 'nested', // compact, compressed, nested or expanded
-          sourcemap: true
+          sourcemap: 'none'
         },
-        files: {
-          'stylesheets/css/styles.css' : 'stylesheets/scss/styles.scss'
-        }
+        files: [{
+          expand: true,
+          cwd: './',
+          src: ['src/css/*.scss'],
+          flatten: false,
+          ext: '.css',
+          extDot: 'last',
+          rename: function(dest, src) {
+            return 'build/' + src.replace('src/', '');
+          }
+        }]
       },
       prod: {
         options: {
           style: 'compressed', // compact, compressed, nested or expanded
-          sourcemap: true
+          sourcemap: 'none'
         },
-        files: {
-          'stylesheets/css/styles.css' : 'stylesheets/scss/styles.scss'
-        }
+        files: [{
+          expand: true,
+          cwd: './',
+          src: ['src/css/*.scss'],
+          flatten: false,
+          ext: '.css',
+          extDot: 'last',
+          rename: function(dest, src) {
+            return 'build/' + src.replace('src/', '');
+          }
+        }]
+      }
+    },
+
+
+    concat_css: {
+      dev: {
+        src: ["build/css/*.css"],
+        dest: "dist/css/bundle.css"
+      },
+      prod: {
+        src: ["build/css/*.css"],
+        dest: "dist/css/bundle.css"
+      }
+    },
+
+    import_js: {
+      dev: {
+        files: [{
+          expand: true,
+          flatten: false,
+          cwd: './',
+          src: ['src/js/*.js'],
+          ext: '.js',
+          rename: function(dest, src) {
+            return 'build/' + src.replace('src/', '');
+          }
+        }]
+      },
+      prod: {
+        files: [{
+          expand: true,
+          flatten: false,
+          cwd: './',
+          src: ['src/js/*.js'],
+          ext: '.js',
+          rename: function(dest, src) {
+            return 'build/' + src.replace('src/', '');
+          }
+        }]
       }
     },
 
@@ -35,33 +91,31 @@ module.exports = function(grunt){
         },
         files: {
           // Where to combine and minify JS files, followed by list of which files to include and exclude
-          'js/script.min.js' : ['js/scripts/*.js', 'js/script.js']
+          'dist/js/bundle.js' : ['build/js/*.js']
         }
       },
       prod: {
         files: {
           // Where to combine and minify JS files, followed by list of which files to include and exclude
-          'js/script.min.js' : ['js/scripts/*.js', 'js/script.js', '!js/scripts/livereload.js']
+          'dist/js/bundle.js' : ['build/js/*.js']
         }
       }
     },
 
     // Watch options: what tasks to run when changes to files are saved
     watch: {
-      options: {
-        livereload: true
-      },
       css: {
-        files: ['stylesheets/scss/*.scss'],
+        files: ['src/css/*.scss'],
         tasks: ['sass:dev']
       },
       js: {
-        files: ['js/scripts/*.js', '!js/script.min.js'], // Watch for changes in JS files except for script.min.js to avoid reload loops
+        files: ['src/js/*.js', '!js/*.min.js'], // Watch for changes in JS files except for *.min.js to avoid reload loops
         tasks: ['uglify:dev']
       }
 		}
 	});
 
-  grunt.registerTask('default', ['sass:dev','uglify:dev','watch']);
-  grunt.registerTask('production', ['sass:prod','uglify:prod']);
+  grunt.registerTask('default', ['sass:dev','concat_css:dev','import_js:dev','uglify:dev']);
+  grunt.registerTask('watch', ['watch']);
+  grunt.registerTask('dist', ['sass:prod','concat_css:prod','import_js:prod','uglify:prod']);
 };
