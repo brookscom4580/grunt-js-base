@@ -84,6 +84,39 @@ module.exports = function(grunt){
       }
     },
 
+
+    babel: {
+      options: {
+        sourceMap: false,
+        presets: ['babel-preset-es2015']
+      },
+      dev: {
+        files: [{
+          expand: true,
+          flatten: false,
+          cwd: './',
+          src: ['src/js/*.es6'],
+          ext: '.js',
+          rename: function(dest, src) {
+            return 'build/' + src.replace('src/', '').replace('.es6', '.es6.js');
+          }
+        }]
+      },
+      prod: {
+        files: [{
+          expand: true,
+          flatten: false,
+          cwd: './',
+          src: ['src/js/*.es6'],
+          ext: '.js',
+          rename: function(dest, src) {
+            return 'build/' + src.replace('src/', '').replace('.es6', '.es6.js');
+          }
+        }]
+      }
+    },
+
+
     uglify: {
       dev: {
         options: {
@@ -115,7 +148,7 @@ module.exports = function(grunt){
 		}
 	});
 
-  grunt.registerTask('default', ['sass:dev','concat_css:dev','import_js:dev','uglify:dev']);
+  grunt.registerTask('default', ['sass:dev','concat_css:dev','babel:dev','import_js:dev','uglify:dev']);
   grunt.registerTask('watch', ['watch']);
-  grunt.registerTask('dist', ['sass:prod','concat_css:prod','import_js:prod','uglify:prod']);
+  grunt.registerTask('dist', ['sass:prod','concat_css:prod','babel:prod','import_js:prod','uglify:prod']);
 };
